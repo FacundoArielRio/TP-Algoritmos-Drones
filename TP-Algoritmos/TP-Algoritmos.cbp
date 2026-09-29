@@ -32,7 +32,13 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="archivos.cpp" />
+		<Unit filename="drone.cpp" />
+		<Unit filename="include/archivos.h" />
+		<Unit filename="include/drone.h" />
+		<Unit filename="include/visualizador.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="visualizador.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
