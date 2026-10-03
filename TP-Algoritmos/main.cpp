@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include "include/drone.h"
 #include "include/archivos.h"
 #include "include/visualizador.h"
@@ -58,7 +59,7 @@ void ejecutarMenu(/*Orden grilla[TAM_GRILLA][TAM_GRILLA]*/)
 
             case 3:
                 cout << "[OPERACION 3] Crear un archivo de ataque nuevo\n" << endl;
-                //crearArchivoAtaque();
+                crearArchivoAtaque();
                 break;
 
             case 4:
