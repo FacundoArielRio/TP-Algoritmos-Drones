@@ -38,7 +38,7 @@ void crearArchivoAtaque()
     {
         OrdenArchivo reg;
 
-        cout << "Registro" << contador+1 << "\n" << endl;
+        cout << "Registro " << contador+1 << "\n" << endl;
 
         cout << "Coordenada X entre 0 y 199: \n" << endl;
         cin >> reg.x;
@@ -53,6 +53,7 @@ void crearArchivoAtaque()
 
         int accion;
         cout << "Accion a realizar en (" << reg.x << ";" << reg.y << "):\n" << endl;
+
         cout << "  0 = Ninguna (solo moverse)\n";
         cout << "  1 = Despegue\n";
         cout << "  2 = Soltar Granada 1\n";
