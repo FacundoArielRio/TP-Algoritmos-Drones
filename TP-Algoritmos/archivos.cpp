@@ -45,11 +45,11 @@ void crearArchivoAtaque()
         cout << "Coordenada Y entre 0 y 199: \n" << endl;
         cin >> reg.y;
 
-        bool soltarGranada1 = false;
-        bool soltarGranada2 = false;
-        bool ataqueKamikaze = false;
-        bool aterrizaje = false;
-        bool despegue = false;
+        bool reg.soltarGranada1 = false;
+        bool reg.soltarGranada2 = false;
+        bool reg.ataqueKamikaze = false;
+        bool reg.aterrizaje = false;
+        bool reg.despegue = false;
 
         int accion;
         cout << "Accion a realizar en (" << reg.x << ";" << reg.y << "):\n" << endl;
