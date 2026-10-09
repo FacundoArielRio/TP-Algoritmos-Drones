@@ -11,8 +11,8 @@ void ejecutarMenu(Orden grilla[TAM_GRILLA][TAM_GRILLA]);
 
 int main()
 {
-    Orden grilla[TAM_GRILLA][TAM_GRILLA];
-
+    static Orden grilla[TAM_GRILLA][TAM_GRILLA];
+    inicializarGrilla(grilla);
     ejecutarMenu(grilla);
 
     return 0;
@@ -48,7 +48,7 @@ void ejecutarMenu(Orden grilla[TAM_GRILLA][TAM_GRILLA])
                 cout << "[OPERACION 1] Cargar archivo de ataque en memoria\n" << endl;
                 char rutaArchivo[384];
                 pedirRutaArchivo(rutaArchivo);
-                cargarEnMemoria(ruta, grilla);
+                cargarEnMemoria(rutaArchivo, grilla);
                 break;
 
             case 2:
