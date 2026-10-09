@@ -5,22 +5,31 @@
 
 using namespace std;
 
-void crearArchivoAtaque()
+void pedirRutaArchivo(char rutaFinal[])
 {
     char ruta[256];
     char nombre[128];
-    char rutaFinal[384] = "";
 
-    cout << "Crear archivo de ataque nuevo \n" << endl;
-    cout << "Ingrese la ruta del archivo a crear: \n" << endl;
+    rutaFinal[0] = '\0';
+
+    cout << "Ingrese la ruta del archivo: " << endl;
     cin >> ruta;
-    cout << "Ingrese el nombre del archivo a crear: \n" << endl;
+    cout << "Ingrese el nombre del archivo: " << endl;
     cin >> nombre;
 
-    strcat(rutaFinal,ruta);
-    strcat(rutaFinal,"/");
-    strcat(rutaFinal,nombre);
-    strcat(rutaFinal,".dat");
+    strcat(rutaFinal, ruta);
+    strcat(rutaFinal, "/");
+    strcat(rutaFinal, nombre);
+    strcat(rutaFinal, ".dat");
+}
+
+void crearArchivoAtaque()
+{
+    char rutaFinal[384];
+
+    cout << "Crear archivo de ataque nuevo \n" << endl;
+
+    pedirRutaArchivo(rutaFinal);
 
     FILE *f = fopen(rutaFinal,"wb");
     if (f == NULL)

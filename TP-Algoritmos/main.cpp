@@ -7,14 +7,13 @@
 using namespace std;
 
 void opcionesMenu();
-void ejecutarMenu(/*Orden grilla[TAM_GRILLA][TAM_GRILLA]*/);
+void ejecutarMenu(Orden grilla[TAM_GRILLA][TAM_GRILLA]);
 
 int main()
 {
-    //Orden grilla[TAM_GRILLA][TAM_GRILLA];
-    //inicializarGrilla(grilla);
+    Orden grilla[TAM_GRILLA][TAM_GRILLA];
 
-    ejecutarMenu(/*grilla*/);
+    ejecutarMenu(grilla);
 
     return 0;
 }
@@ -33,7 +32,7 @@ void opcionesMenu()
     cout << "=====================================================\n";
 }
 
-void ejecutarMenu(/*Orden grilla[TAM_GRILLA][TAM_GRILLA]*/)
+void ejecutarMenu(Orden grilla[TAM_GRILLA][TAM_GRILLA])
 {
     int opcion = -1;
     char ruta[256];
@@ -47,14 +46,14 @@ void ejecutarMenu(/*Orden grilla[TAM_GRILLA][TAM_GRILLA]*/)
         {
             case 1:
                 cout << "[OPERACION 1] Cargar archivo de ataque en memoria\n" << endl;
-                cout << "Indique ruta y nombre del archivo binario (ej: ataque.dat): " << endl;
-                cin >> ruta;
-                //cargarEnMemoria(ruta, grilla);
+                char rutaArchivo[384];
+                pedirRutaArchivo(rutaArchivo);
+                cargarEnMemoria(ruta, grilla);
                 break;
 
             case 2:
                 cout << "[OPERACION 2] Mostrar ataque cargado en memoria\n" << endl;
-                //mostrarAtaque(grilla);
+
                 break;
 
             case 3:
@@ -64,24 +63,22 @@ void ejecutarMenu(/*Orden grilla[TAM_GRILLA][TAM_GRILLA]*/)
 
             case 4:
                 cout << "[OPERACION 4] Corregir un registro del archivo binario\n" << endl;
-                //corregirRegistroArchivo();
+
                 break;
 
             case 5:
                 cout << "[OPERACION 5] Corregir un registro en memoria\n" << endl;
-                //corregirRegistroMemoria(grilla);
+
                 break;
 
             case 6:
                 cout << "[OPERACION 6] Guardar memoria en un archivo nuevo\n" << endl;
-                //guardarMemoriaAArchivo(grilla);
+
                 break;
 
             case 7:
                 cout << "[OPERACION 7] Visualizar ataque cargado en HTML\n" << endl;
-                cout << "Indique ruta y nombre del archivo HTML a generar (ej: mapa.html): " << endl;
-                cin >> ruta;
-                //generarHTML(ruta, grilla);
+
                 break;
 
             case 0:
