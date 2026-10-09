@@ -41,7 +41,8 @@ bool validarInstrucciones(OrdenArchivo registros[], int cantidad, int &idxDespeg
             idxDespegue=i;
             if(registros[i].soltarGranada1==true||registros[i].soltarGranada2==true||registros[i].ataqueKamikaze==true)
             {
-
+                cout << "La instrucción de despegue no puede contener armas ni ataques.\n" << endl;
+                return false;
             }
 
         }
