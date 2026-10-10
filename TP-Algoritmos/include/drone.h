@@ -33,8 +33,10 @@ struct OrdenArchivo {
 // Prototipos de funciones implementadas en drone.cpp
 void inicializarGrilla(Orden grilla[TAM_GRILLA][TAM_GRILLA]);
 bool validarRuta(OrdenArchivo registros[], int cantidad, int &idxDespegue);
-bool cargarEnMemoria(const char *rutaArchivo, Orden grilla[TAM_GRILLA][TAM_GRILLA]);
-void mostrarAtaque(const Orden grilla[TAM_GRILLA][TAM_GRILLA]);
-void corregirRegistroMemoria(Orden grilla[TAM_GRILLA][TAM_GRILLA]);
+bool validarInstrucciones(OrdenArchivo registros[], int cantidad, int &idxDespegue);
+bool validarRecorrido(OrdenArchivo registros[], int cantidad, int idxDespegue);
+bool cargarEnMemoria(char rutaArchivo[], Orden grilla[TAM_GRILLA][TAM_GRILLA]);
+
+
 
 #endif // DRONE_H_INCLUDED
