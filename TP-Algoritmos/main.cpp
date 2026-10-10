@@ -11,7 +11,7 @@ void ejecutarMenu(Orden grilla[TAM_GRILLA][TAM_GRILLA]);
 
 int main()
 {
-    static Orden grilla[TAM_GRILLA][TAM_GRILLA];
+    Orden grilla[TAM_GRILLA][TAM_GRILLA];
     inicializarGrilla(grilla);
     ejecutarMenu(grilla);
 

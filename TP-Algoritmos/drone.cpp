@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdio>
+#include <cmath>
 #include "include/drone.h"
 
 using namespace std;
@@ -26,7 +27,7 @@ bool validarInstrucciones(OrdenArchivo registros[], int cantidad, int &idxDespeg
 {
     int despegues=0;
     int finales=0;
-    idxDespegues=-1;
+    idxDespegue=-1;
     for(int i=0; i<cantidad; i++)
     {
         if(registros[i].x<0||registros[i].x>=TAM_GRILLA||registros[i].y<0||registros[i].y>=TAM_GRILLA)
@@ -44,9 +45,93 @@ bool validarInstrucciones(OrdenArchivo registros[], int cantidad, int &idxDespeg
                 cout << "La instrucción de despegue no puede contener armas ni ataques.\n" << endl;
                 return false;
             }
-
+        }
+        if(registros[i].aterrizaje==true||registros[i].ataqueKamikaze==true)
+        {
+            finales++;
         }
     }
+    if(despegues!=1)
+    {
+        cout << "Debe haber una unica instruccion de despegue (encontradas: " << despegues << ").\n" << endl;
+        return false;
+    }
+    if(finales!=1)
+    {
+        cout << "Debe haber una unica instruccion de aterrizaje o ataque kamikaze (encontradas: " << finales << ").\n" << endl;
+        return false;
+    }
+    return true;
+}
+
+bool validarRecorrido(OrdenArchivo registros[], int cantidad, int idxDespegue)
+{
+    bool visitado[TAM_GRILLA][TAM_GRILLA];
+    for(int i=0; i<TAM_GRILLA;i++)
+    {
+        for(int j=0;j<TAM_GRILLA;j++)
+        {
+            visitado[i][j]=false;
+        }
+    }
+    int idxActual=idxDespegue;
+    int pasosRecorridos=0;
+
+    while(pasosRecorridos<cantidad)
+    {
+        int cx = registros[idxActual].x;
+        int cy = registros[idxActual].y;
+
+        if(visitado[cx][cy]==true)
+        {
+            cout << "Las coordenadas (" << cx << "; " << cy << ") estan repetidas.\n" << endl;
+            return false;
+        }
+        visitado[cx][cy]=true;
+        pasosRecorridos++;
+
+        if(registros[idxActual].aterrizaje==true|| registros[idxActual].ataqueKamikaze==true)
+        {
+            break;
+        }
+
+        int siguienteX=registros[idxActual].siguientex;
+        int siguienteY=registros[idxActual].siguientey;
+
+        int diferenciaX = abs(siguienteX - cx);
+        int diferenciaY = abs(siguienteY - cy);
+
+        if(diferenciaX>1||diferenciaY>1)
+        {
+            cout << "Salto no valido hacia (" << siguienteX << "; " << siguienteY << "). No son celdas aledanas." << endl;
+            return false;
+        }
+
+        int siguienteIdx=-1;
+
+        for(int j=0;j<cantidad;j++)
+        {
+            if(registros[j].x==siguienteX&&registros[j].y==siguienteY)
+            {
+                siguienteIdx=j;
+                break;
+            }
+        }
+        if(siguienteIdx==-1)
+        {
+            cout << "Ruta incompleta. (" << siguienteX << "; " << siguienteY << ").\n" << endl;
+            return false;
+        }
+
+        idxActual=siguienteIdx;
+    }
+    if(pasosRecorridos!=cantidad)
+    {
+        cout << "Existen registros desconectados de la ruta principal.\n" << endl;
+        return false;
+    }
+
+    return true;
 }
 
 bool validarRuta(OrdenArchivo registros[], int cantidad, int &idxDespegue)
@@ -66,6 +151,7 @@ bool validarRuta(OrdenArchivo registros[], int cantidad, int &idxDespegue)
     {
         return false;
     }
+    return true;
 }
 
 bool cargarEnMemoria(char rutaArchivo[], Orden grilla[TAM_GRILLA][TAM_GRILLA])
@@ -77,7 +163,7 @@ bool cargarEnMemoria(char rutaArchivo[], Orden grilla[TAM_GRILLA][TAM_GRILLA])
         return false;
     }
 
-    static OrdenArchivo buffer[TAM_GRILLA * TAM_GRILLA];
+    OrdenArchivo buffer[TAM_GRILLA * TAM_GRILLA];
     int cantidad=0;
     while (fread(&buffer[cantidad], sizeof(OrdenArchivo), 1, f)==1)
     {
@@ -109,4 +195,5 @@ bool cargarEnMemoria(char rutaArchivo[], Orden grilla[TAM_GRILLA][TAM_GRILLA])
         grilla[x][y].siguientey = buffer[i].siguientey;
     }
     cout << "Archivo cargado en memoria exitosamente. Cantidad de registros: " << cantidad << endl;
+    return true;
 }
