@@ -6,3 +6,4 @@ obj/
 *.layout
 *.depend
 *.tmp
+test_*
