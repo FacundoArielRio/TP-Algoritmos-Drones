@@ -20,6 +20,7 @@ int main()
 
 void opcionesMenu()
 {
+    cout << endl;
     cout << "=====================================================\n";
     cout << "1. Cargar archivo de ataque en memoria.              \n";
     cout << "2. Mostrar ataque cargado.                           \n";
@@ -42,6 +43,7 @@ void ejecutarMenu(Orden grilla[TAM_GRILLA][TAM_GRILLA])
         opcionesMenu();
         cout << "Ingrese una opcion del 0 al 7" << endl;
         cin >> opcion;
+        cout << endl << endl;
         switch(opcion)
         {
             case 1:
@@ -53,7 +55,7 @@ void ejecutarMenu(Orden grilla[TAM_GRILLA][TAM_GRILLA])
 
             case 2:
                 cout << "[OPERACION 2] Mostrar ataque cargado en memoria\n" << endl;
-
+                mostrarAtaque(grilla, TAM_GRILLA);
                 break;
 
             case 3:
@@ -89,7 +91,7 @@ void ejecutarMenu(Orden grilla[TAM_GRILLA][TAM_GRILLA])
                 cout << "[!] Opcion no valida. Seleccione un numero entre 0 y 7.\n" << endl;
                 break;
         }
-    }while (opcion != 0);
+    } while (opcion != 0);
 }
 
 

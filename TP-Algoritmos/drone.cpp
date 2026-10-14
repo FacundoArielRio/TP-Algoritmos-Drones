@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdio>
 #include <cmath>
+#include <conio.h>
 #include "include/drone.h"
 
 using namespace std;
@@ -196,4 +197,85 @@ bool cargarEnMemoria(char rutaArchivo[], Orden grilla[TAM_GRILLA][TAM_GRILLA])
     }
     cout << "Archivo cargado en memoria exitosamente. Cantidad de registros: " << cantidad << endl;
     return true;
+}
+
+void mostrarAtaque(Orden grilla[][TAM_GRILLA], int TAM_GRILLA)
+{
+    int pos_x = 0, pos_y = 0;
+    bool pos_despegue = false;
+
+    while (pos_x < TAM_GRILLA && !pos_despegue) {
+        while (pos_y < TAM_GRILLA && !pos_despegue) {
+            if (grilla[pos_x][pos_y].despegue == true)
+                pos_despegue = true;
+
+            else
+                pos_y++;
+        }
+
+        if (!pos_despegue) {
+            pos_x++;
+            pos_y = 0;
+        }
+    }
+
+    if (!pos_despegue) {
+        cout << "No se ha hallado ningun ataque cargado en memoria.\n" << endl;
+        return;
+    }
+
+    cout << "--- RECORRIDO DEL ATAQUE CARGADO ---\n" << endl;
+
+    int contador_celdas = 0;
+    bool fin_ruta = false;
+
+    while (!fin_ruta)
+    {
+        Orden coordenada = grilla[pos_x][pos_y];
+
+        if (contador_celdas % 5 == 0) {
+            cout << "-- PAGINA " << (contador_celdas / 5) + 1 << " --" << endl << endl;
+        }
+
+        cout << "- Coordenada: (" << pos_x << "; " << pos_y << ") -" << endl;
+        if (coordenada.despegue)
+            cout << " -> [ACCION] Despegue" << endl;
+        if (coordenada.aterrizaje)
+            cout << " -> [ACCION] Aterrizaje" << endl;
+        if (coordenada.soltarGranada1)
+            cout << " -> [ACCION] Soltar Granada 1" << endl;
+        if (coordenada.soltarGranada2)
+            cout << " -> [ACCION] Soltar Granada 2" << endl;
+        if (coordenada.ataqueKamikaze)
+            cout << " -> [ACCION] Ataque Kamikaze" << endl;
+        if (coordenada.espera == 1)
+            cout << " -> Tiempo de espera: " << coordenada.espera << " segundo" << endl;
+        else
+            cout << " -> Tiempo de espera: " << coordenada.espera << " segundos" << endl;
+
+        cout << endl;
+
+        if (coordenada.aterrizaje || coordenada.ataqueKamikaze)
+        {
+            fin_ruta = true;
+            cout << "--- FIN DEL ATAQUE ---\n" << endl;
+        }
+        else
+        {
+            pos_x = coordenada.siguientex;
+            pos_y = coordenada.siguientey;
+        }
+
+        contador_celdas++;
+
+        if (contador_celdas % 5 == 0 && !fin_ruta)
+        {
+            cout << "\n[Presione la tecla 's' para ver la siguiente pagina...]";
+            char tecla = getch();
+            while (tecla != 's' && tecla != 'S') {
+                tecla = getch();
+            }
+            cout << endl << endl << endl;
+        }
+    }
 }
