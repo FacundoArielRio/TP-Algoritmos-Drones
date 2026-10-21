@@ -199,7 +199,7 @@ bool cargarEnMemoria(char rutaArchivo[], Orden grilla[TAM_GRILLA][TAM_GRILLA])
     return true;
 }
 
-void mostrarAtaque(Orden grilla[][TAM_GRILLA], int TAM_GRILLA)
+void mostrarAtaque(Orden grilla[TAM_GRILLA][TAM_GRILLA])
 {
     int pos_x = 0, pos_y = 0;
     bool pos_despegue = false;

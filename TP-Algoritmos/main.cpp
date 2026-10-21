@@ -55,7 +55,7 @@ void ejecutarMenu(Orden grilla[TAM_GRILLA][TAM_GRILLA])
 
             case 2:
                 cout << "[OPERACION 2] Mostrar ataque cargado en memoria\n" << endl;
-                mostrarAtaque(grilla, TAM_GRILLA);
+                mostrarAtaque(grilla);
                 break;
 
             case 3:

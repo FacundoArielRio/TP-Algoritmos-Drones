@@ -36,7 +36,7 @@ bool validarRuta(OrdenArchivo registros[], int cantidad, int &idxDespegue);
 bool validarInstrucciones(OrdenArchivo registros[], int cantidad, int &idxDespegue);
 bool validarRecorrido(OrdenArchivo registros[], int cantidad, int idxDespegue);
 bool cargarEnMemoria(char rutaArchivo[], Orden grilla[TAM_GRILLA][TAM_GRILLA]);
-void mostrarAtaque(Orden grilla[][TAM_GRILLA], int TAM_GRILLA);
+void mostrarAtaque(Orden grilla[TAM_GRILLA][TAM_GRILLA]);
 
 
 
