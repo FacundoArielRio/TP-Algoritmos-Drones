@@ -111,3 +111,103 @@ void crearArchivoAtaque()
 
     }while (continuar == 's' || continuar == 'S');
 }
+
+void corregirRegistroArchivo()
+{
+    char rutaArchivo[384];
+    pedirRutaArchivo(rutaArchivo);
+
+    FILE *f = fopen(rutaArchivo, "rb+");
+    if (f == NULL)
+    {
+        cout << "\nNo se pudo abrir el archivo: " << rutaArchivo << endl;
+        return;
+    }
+
+    int x, y;
+    cout << "\nIngrese la coordenada X del registro a corregir: ";
+    cin >> x;
+    cout << "Ingrese la coordenada Y del registro a corregir: ";
+    cin >> y;
+
+    if (x<0 || x>=TAM_GRILLA || y<0 || y>=TAM_GRILLA)
+    {
+        cout << "\nCoordenadas incorrectas" << endl;
+        fclose(f);
+        return;
+    }
+
+    fseek(f, 0, SEEK_END);
+    int tam = ftell(f);
+    int cantidad = tam / sizeof(OrdenArchivo);
+    fseek(f, 0, SEEK_SET);
+
+    OrdenArchivo reg;
+    int posicion = -1;
+
+    for (int i=0; i<cantidad; i++)
+    {
+        if (reg.x == x && reg.y == y)
+        {
+            posicion = i;
+            break;
+        }
+    }
+
+    if (posicion == -1)
+    {
+        cout << "\nNo existe un registro con esas coordenadas." << endl;
+        fclose(f);
+        return;
+    }
+    cout << "\n--- REGISTRO ENCONTRADO ---" << endl;
+    cout << "X: " << reg.x << endl;
+    cout << "Y: " << reg.y << endl;
+    cout << "Espera: " << reg.espera << endl;
+    cout << "Soltar granada 1: " << reg.soltarGranada1 << endl;
+    cout << "Soltar granada 2: " << reg.soltarGranada2 << endl;
+    cout << "Ataque kamikaze: " << reg.ataqueKamikaze << endl;
+    cout << "Aterrizaje: " << reg.aterrizaje << endl;
+    cout << "Despegue: " << reg.despegue << endl;
+    cout << "Siguiente X: " << reg.siguientex << endl;
+    cout << "Siguiente Y: " << reg.siguientey << endl;
+
+    OrdenArchivo nuevo = reg;
+    cout << "\nIngrese los nuevos datos del registro:" << endl;
+    cout << "Nueva X (0 a 199): ";
+    cin >> nuevo.x;
+    cout << "Nueva Y (0 a 199): ";
+    cin >> nuevo.y;
+    cout << "Nueva espera (segundos): ";
+    cin >> nuevo.espera;
+    cout << "Soltar granada 1 (1=Si, 0=No): ";
+    cin >> nuevo.soltarGranada1;
+    cout << "Soltar granada 2 (1=Si, 0=No): ";
+    cin >> nuevo.soltarGranada2;
+    cout << "Ataque kamikaze (1=Si, 0=No): ";
+    cin >> nuevo.ataqueKamikaze;
+    cout << "Aterrizaje (1=Si, 0=No): ";
+    cin >> nuevo.aterrizaje;
+    cout << "Despegue (1=Si, 0=No): ";
+    cin >> nuevo.despegue;
+    cout << "Siguiente X (0 a 199): ";
+    cin >> nuevo.siguientex;
+    cout << "Siguiente Y (0 a 199): ";
+    cin >> nuevo.siguientey;
+
+    if (nuevo.espera < 0 || nuevo.x < 0 || nuevo.x >= TAM_GRILLA ||
+        nuevo.y < 0 || nuevo.y >= TAM_GRILLA ||
+        nuevo.siguientex < 0 || nuevo.siguientex >= TAM_GRILLA ||
+        nuevo.siguientey < 0 || nuevo.siguientey >= TAM_GRILLA)
+    {
+        cout << "\nDatos incorrectos. No se modifico el archivo." << endl;
+        fclose(f);
+        return;
+    }
+
+    fseek(f,posicion * sizeof(OrdenArchivo),SEEK_SET);
+    fwrite(&nuevo,sizeof(OrdenArchivo),1,f);
+    cout << "\nRegistro corregido y guardado en el archivo." << endl;
+
+    fclose(f);
+}

@@ -65,7 +65,7 @@ void ejecutarMenu(Orden grilla[TAM_GRILLA][TAM_GRILLA])
 
             case 4:
                 cout << "[OPERACION 4] Corregir un registro del archivo binario\n" << endl;
-
+                corregirRegistroArchivo();
                 break;
 
             case 5:
