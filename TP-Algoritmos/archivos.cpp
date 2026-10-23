@@ -147,6 +147,8 @@ void corregirRegistroArchivo()
 
     for (int i=0; i<cantidad; i++)
     {
+        fread(&reg, sizeof(OrdenArchivo), 1, f);
+        
         if (reg.x == x && reg.y == y)
         {
             posicion = i;
