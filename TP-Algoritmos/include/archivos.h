@@ -6,6 +6,7 @@
 // Prototipos de funciones implementadas en archivos.cpp
 void pedirRutaArchivo(char rutaFinal[]);
 void crearArchivoAtaque();
+void corregirRegistroArchivo();
 
 
 #endif // ARCHIVOS_H_INCLUDED
