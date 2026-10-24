@@ -27,8 +27,6 @@ void crearArchivoAtaque()
 {
     char rutaFinal[384];
 
-    cout << "Crear archivo de ataque nuevo \n" << endl;
-
     pedirRutaArchivo(rutaFinal);
 
     FILE *f = fopen(rutaFinal,"wb");
@@ -38,7 +36,7 @@ void crearArchivoAtaque()
         return;
     }
 
-    cout << "Archivo creado. Ingresar los registros:\n" << endl;
+    cout << "\nArchivo creado. Ingresar los registros: \n" << endl;
 
     char continuar;
     int contador=0;
@@ -47,11 +45,11 @@ void crearArchivoAtaque()
     {
         OrdenArchivo reg;
 
-        cout << "Registro " << contador+1 << "\n" << endl;
+        cout << "\n---- Registro " << contador+1 << " ----\n" << endl;
 
-        cout << "Coordenada X entre 0 y 199: \n" << endl;
+        cout << "Coordenada X entre 0 y 199: ";
         cin >> reg.x;
-        cout << "Coordenada Y entre 0 y 199: \n" << endl;
+        cout << "Coordenada Y entre 0 y 199: ";
         cin >> reg.y;
 
         reg.soltarGranada1 = false;
@@ -61,7 +59,7 @@ void crearArchivoAtaque()
         reg.despegue = false;
 
         int accion;
-        cout << "Accion a realizar en (" << reg.x << ";" << reg.y << "):\n" << endl;
+        cout << "\nAccion a realizar en (" << reg.x << ";" << reg.y << "):\n" << endl;
 
         cout << "  0 = Ninguna (solo moverse)\n";
         cout << "  1 = Despegue\n";
@@ -69,7 +67,8 @@ void crearArchivoAtaque()
         cout << "  3 = Soltar Granada 2\n";
         cout << "  4 = Ataque Kamikaze\n";
         cout << "  5 = Aterrizaje\n";
-        cout << "Elija una opcion de 0 a 5: ";
+
+        cout << "\nElija una opcion de 0 a 5: ";
         cin >> accion;
 
         switch(accion)
@@ -92,21 +91,28 @@ void crearArchivoAtaque()
                 reg.aterrizaje = true;
                 break;
             default:
-                cout << "Error: debe de elegir una opcion del 0 al 5.\n" << endl;
+                cout << "\nError: debe de elegir una opcion del 0 al 5." << endl;
             break;
         }
 
-        cout << "Segundos de espera: \n" << endl;
+        cout << "\nSegundos de espera: ";
         cin >> reg.espera;
-        cout << "Siguiente posicion X entre 0 y 199:\n" << endl;
+
+        if (reg.aterrizaje == true || reg.ataqueKamikaze == true)
+        {
+            cout << continuar << endl;
+            return;
+        }
+
+        cout << "\nSiguiente posicion X entre 0 y 199: ";
         cin >> reg.siguientex;
-        cout << "Siguiente posicion Y entre 0 y 199:\n" << endl;
+        cout << "Siguiente posicion Y entre 0 y 199: ";
         cin >> reg.siguientey;
 
         fwrite(&reg, sizeof(OrdenArchivo),1,f);
         contador++;
 
-        cout << "Desea ingresar otro registro? (s o S para si, pulsar otro boton para no): \n";
+        cout << "\nDesea ingresar otro registro? (s o S para si, pulsar otro boton para no): \n";
         cin >> continuar;
 
     }while (continuar == 's' || continuar == 'S');
@@ -148,7 +154,7 @@ void corregirRegistroArchivo()
     for (int i=0; i<cantidad; i++)
     {
         fread(&reg, sizeof(OrdenArchivo), 1, f);
-        
+
         if (reg.x == x && reg.y == y)
         {
             posicion = i;
