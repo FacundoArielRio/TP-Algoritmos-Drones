@@ -31,7 +31,8 @@ bool validarInstrucciones(OrdenArchivo registros[], int cantidad, int &idxDespeg
     idxDespegue=-1;
     for(int i=0; i<cantidad; i++)
     {
-        if(registros[i].x<0||registros[i].x>=TAM_GRILLA||registros[i].y<0||registros[i].y>=TAM_GRILLA)
+        if(registros[i].x < 0 || registros[i].x >= TAM_GRILLA ||
+           registros[i].y < 0 || registros[i].y >= TAM_GRILLA)
         {
             cout << "Las coordenadas (" << registros[i].x << ";" << registros[i].y << ") estan fuera de rango.\n" << endl;
             return false;
@@ -139,7 +140,7 @@ bool validarRuta(OrdenArchivo registros[], int cantidad, int &idxDespegue)
 {
     if(cantidad<=0)
     {
-        cout << "No hay registros para validad.\n" << endl;
+        cout << "\nNo hay registros para validar." << endl;
         return false;
     }
 
@@ -160,7 +161,7 @@ bool cargarEnMemoria(char rutaArchivo[], Orden grilla[TAM_GRILLA][TAM_GRILLA])
     FILE *f = fopen(rutaArchivo,"rb");
     if(f == NULL)
     {
-        cout << "No se puedo abrir el archivo \n" << rutaArchivo << endl;
+        cout << "\nNo se puedo abrir el archivo " << rutaArchivo << endl;
         return false;
     }
 
@@ -175,7 +176,7 @@ bool cargarEnMemoria(char rutaArchivo[], Orden grilla[TAM_GRILLA][TAM_GRILLA])
     int idxDespegue=-1;
     if (validarRuta(buffer, cantidad, idxDespegue)==false)
     {
-        cout << "El archivo no cumple las reglas de vuelo. No se cargo en memoria.\n" << endl;
+        cout << "\nEl archivo no cumple las reglas de vuelo. No se cargo en memoria." << endl;
         return false;
     }
 
@@ -195,7 +196,7 @@ bool cargarEnMemoria(char rutaArchivo[], Orden grilla[TAM_GRILLA][TAM_GRILLA])
         grilla[x][y].siguientex = buffer[i].siguientex;
         grilla[x][y].siguientey = buffer[i].siguientey;
     }
-    cout << "Archivo cargado en memoria exitosamente. Cantidad de registros: " << cantidad << endl;
+    cout << "\nArchivo cargado en memoria exitosamente. Cantidad de registros: " << cantidad << endl;
     return true;
 }
 
