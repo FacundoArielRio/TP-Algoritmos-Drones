@@ -97,13 +97,6 @@ void crearArchivoAtaque()
 
         cout << "\nSegundos de espera: ";
         cin >> reg.espera;
-
-        if (reg.aterrizaje == true || reg.ataqueKamikaze == true)
-        {
-            cout << continuar << endl;
-            return;
-        }
-
         cout << "\nSiguiente posicion X entre 0 y 199: ";
         cin >> reg.siguientex;
         cout << "Siguiente posicion Y entre 0 y 199: ";
