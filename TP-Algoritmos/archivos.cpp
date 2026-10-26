@@ -148,7 +148,6 @@ void corregirRegistroArchivo()
     for (int i=0; i<cantidad; i++)
     {
         fread(&reg, sizeof(OrdenArchivo), 1, f);
-        
         if (reg.x == x && reg.y == y)
         {
             posicion = i;
@@ -213,3 +212,39 @@ void corregirRegistroArchivo()
 
     fclose(f);
 }
+
+void guardarMemoriaArchivoNuevo()
+{
+    char rutaArchivo[384];
+    pedirRutaArchivo(rutaArchivo);
+
+    FILE *f = fopen(rutaArchivo,"rb");
+    if (f == NULL)
+    {
+        cout << "\nNo se pudo crear el archivo en: \n" << rutaArchivo << endl;
+        return;
+    }
+
+    FILE *g = fopen("g.dat", "wb");
+
+    if (g == NULL)
+    {
+        cout << "No se pudo crear el archivo de destino." << endl;
+        fclose(f);
+        return;
+    }
+
+    int aux;
+
+    while (fread(&aux, sizeof(int), 1, f) == 1)
+    {
+        fwrite(&aux, sizeof(int), 1, g);
+    }
+
+    fclose(f);
+    fclose(g);
+
+    cout << "Memoria guardada en nuevo archivo." << endl;
+}
+
+

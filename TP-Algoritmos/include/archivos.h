@@ -7,6 +7,6 @@
 void pedirRutaArchivo(char rutaFinal[]);
 void crearArchivoAtaque();
 void corregirRegistroArchivo();
-
+void guardarMemoriaArchivoNuevo();
 
 #endif // ARCHIVOS_H_INCLUDED

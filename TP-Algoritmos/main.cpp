@@ -75,7 +75,7 @@ void ejecutarMenu(Orden grilla[TAM_GRILLA][TAM_GRILLA])
 
             case 6:
                 cout << "[OPERACION 6] Guardar memoria en un archivo nuevo\n" << endl;
-
+                guardarMemoriaArchivoNuevo();
                 break;
 
             case 7:
