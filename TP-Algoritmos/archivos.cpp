@@ -213,38 +213,50 @@ void corregirRegistroArchivo()
     fclose(f);
 }
 
-void guardarMemoriaArchivoNuevo()
+bool guardarMemoriaArchivoNuevo(char rutaNuevo[], Orden grilla[TAM_GRILLA][TAM_GRILLA])
 {
-    char rutaArchivo[384];
-    pedirRutaArchivo(rutaArchivo);
-
-    FILE *f = fopen(rutaArchivo,"rb");
+    FILE *f = fopen(rutaNuevo, "wb");
     if (f == NULL)
     {
-        cout << "\nNo se pudo crear el archivo en: \n" << rutaArchivo << endl;
-        return;
+        cout << "[!] Error: No se pudo crear el archivo en la ruta especificada." << endl;
+        return false;
     }
 
-    FILE *g = fopen("g.dat", "wb");
+    int registrosGuardados = 0;
 
-    if (g == NULL)
+    for (int i = 0; i < TAM_GRILLA; i++)
     {
-        cout << "No se pudo crear el archivo de destino." << endl;
-        fclose(f);
-        return;
-    }
+        for (int j = 0; j < TAM_GRILLA; j++)
+        {
+            if (grilla[i][j].despegue||grilla[i][j].aterrizaje||
 
-    int aux;
+                grilla[i][j].soltarGranada1 || grilla[i][j].soltarGranada2||
 
-    while (fread(&aux, sizeof(int), 1, f) == 1)
-    {
-        fwrite(&aux, sizeof(int), 1, g);
+                grilla[i][j].ataqueKamikaze || grilla[i][j].espera > 0)
+            {
+                OrdenArchivo reg;
+                reg.x = i;
+                reg.y = j;
+                reg.espera = grilla[i][j].espera;
+                reg.soltarGranada1 = grilla[i][j].soltarGranada1;
+                reg.soltarGranada2 = grilla[i][j].soltarGranada2;
+                reg.ataqueKamikaze = grilla[i][j].ataqueKamikaze;
+                reg.aterrizaje = grilla[i][j].aterrizaje;
+                reg.despegue = grilla[i][j].despegue;
+                reg.siguientex = grilla[i][j].siguientex;
+                reg.siguientey = grilla[i][j].siguientey;
+
+                fwrite(&reg, sizeof(OrdenArchivo), 1, f);
+                registrosGuardados++;
+            }
+        }
     }
 
     fclose(f);
-    fclose(g);
 
-    cout << "Memoria guardada en nuevo archivo." << endl;
+    cout << "Memoria guardada exitosamente en el nuevo archivo. Total de registros: "
+         << registrosGuardados << endl;
+
+    return true;
 }
-
 

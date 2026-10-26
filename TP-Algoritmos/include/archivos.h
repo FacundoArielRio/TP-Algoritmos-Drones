@@ -7,6 +7,6 @@
 void pedirRutaArchivo(char rutaFinal[]);
 void crearArchivoAtaque();
 void corregirRegistroArchivo();
-void guardarMemoriaArchivoNuevo();
+bool guardarMemoriaArchivoNuevo(char rutaNuevo[], Orden grilla[TAM_GRILLA][TAM_GRILLA]);
 
 #endif // ARCHIVOS_H_INCLUDED
