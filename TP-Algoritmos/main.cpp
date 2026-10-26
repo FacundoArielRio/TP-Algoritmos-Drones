@@ -41,7 +41,7 @@ void ejecutarMenu(Orden grilla[TAM_GRILLA][TAM_GRILLA])
     do
     {
         opcionesMenu();
-        cout << "Ingrese una opcion del 0 al 7" << endl;
+        cout << "Ingrese una opcion del 0 al 7: ";
         cin >> opcion;
         cout << endl << endl;
         switch(opcion)
