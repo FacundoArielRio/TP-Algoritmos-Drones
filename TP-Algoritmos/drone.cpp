@@ -69,67 +69,69 @@ bool validarInstrucciones(OrdenArchivo registros[], int cantidad, int &idxDespeg
 bool validarRecorrido(OrdenArchivo registros[], int cantidad, int idxDespegue)
 {
     bool visitado[TAM_GRILLA][TAM_GRILLA];
-    for(int i=0; i<TAM_GRILLA;i++)
-    {
-        for(int j=0;j<TAM_GRILLA;j++)
-        {
-            visitado[i][j]=false;
+    for (int i = 0; i < TAM_GRILLA; i++) {
+        for (int j = 0; j < TAM_GRILLA; j++) {
+            visitado[i][j] = false;
         }
     }
-    int idxActual=idxDespegue;
-    int pasosRecorridos=0;
 
-    while(pasosRecorridos<cantidad)
+    int idxActual = idxDespegue;
+    int pasosRecorridos = 0;
+    bool llegoAlFinal = false;
+
+    while (pasosRecorridos < cantidad)
     {
         int cx = registros[idxActual].x;
         int cy = registros[idxActual].y;
 
-        if(visitado[cx][cy]==true)
-        {
+        if (visitado[cx][cy]) {
             cout << "Las coordenadas (" << cx << "; " << cy << ") estan repetidas.\n" << endl;
             return false;
         }
-        visitado[cx][cy]=true;
+
+        visitado[cx][cy] = true;
         pasosRecorridos++;
 
-        if(registros[idxActual].aterrizaje==true|| registros[idxActual].ataqueKamikaze==true)
-        {
+        if (registros[idxActual].aterrizaje || registros[idxActual].ataqueKamikaze) {
+            llegoAlFinal = true;
             break;
         }
 
-        int siguienteX=registros[idxActual].siguientex;
-        int siguienteY=registros[idxActual].siguientey;
+        int siguienteX = registros[idxActual].siguientex;
+        int siguienteY = registros[idxActual].siguientey;
 
         int diferenciaX = abs(siguienteX - cx);
         int diferenciaY = abs(siguienteY - cy);
 
-        if(diferenciaX>1||diferenciaY>1)
-        {
+        if (diferenciaX > 1 || diferenciaY > 1 || (siguienteX == cx && siguienteY == cy)) {
             cout << "Salto no valido hacia (" << siguienteX << "; " << siguienteY << "). No son celdas aledanas." << endl;
             return false;
         }
 
-        int siguienteIdx=-1;
-
-        for(int j=0;j<cantidad;j++)
-        {
-            if(registros[j].x==siguienteX&&registros[j].y==siguienteY)
-            {
-                siguienteIdx=j;
+        int siguienteIdx = -1;
+        for (int j = 0; j < cantidad; j++) {
+            if (registros[j].x == siguienteX && registros[j].y == siguienteY) {
+                siguienteIdx = j;
                 break;
             }
         }
-        if(siguienteIdx==-1)
-        {
-            cout << "Ruta incompleta. (" << siguienteX << "; " << siguienteY << ").\n" << endl;
+
+        if (siguienteIdx == -1) {
+            cout << "Ruta incompleta: no existe orden guardada para la celda destino ("
+                 << siguienteX << "; " << siguienteY << ").\n" << endl;
             return false;
         }
 
-        idxActual=siguienteIdx;
+        idxActual = siguienteIdx;
     }
-    if(pasosRecorridos!=cantidad)
-    {
-        cout << "Existen registros desconectados de la ruta principal.\n" << endl;
+
+    if (!llegoAlFinal) {
+        cout << "La ruta no posee una instruccion de finalizacion alcanzable desde el despegue.\n" << endl;
+        return false;
+    }
+
+    if (pasosRecorridos != cantidad) {
+        cout << "Existen registros aislados en el archivo que no pertenecen al trayecto principal.\n" << endl;
         return false;
     }
 

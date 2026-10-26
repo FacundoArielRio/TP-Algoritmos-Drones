@@ -36,7 +36,6 @@ void opcionesMenu()
 void ejecutarMenu(Orden grilla[TAM_GRILLA][TAM_GRILLA])
 {
     int opcion = -1;
-    char ruta[256];
 
     do
     {
