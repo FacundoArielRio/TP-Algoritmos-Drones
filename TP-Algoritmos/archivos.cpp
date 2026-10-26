@@ -212,3 +212,51 @@ void corregirRegistroArchivo()
 
     fclose(f);
 }
+
+bool guardarMemoriaArchivoNuevo(char rutaNuevo[], Orden grilla[TAM_GRILLA][TAM_GRILLA])
+{
+    FILE *f = fopen(rutaNuevo, "wb");
+    if (f == NULL)
+    {
+        cout << "[!] Error: No se pudo crear el archivo en la ruta especificada." << endl;
+        return false;
+    }
+
+    int registrosGuardados = 0;
+
+    for (int i = 0; i < TAM_GRILLA; i++)
+    {
+        for (int j = 0; j < TAM_GRILLA; j++)
+        {
+            if (grilla[i][j].despegue||grilla[i][j].aterrizaje||
+
+                grilla[i][j].soltarGranada1 || grilla[i][j].soltarGranada2||
+
+                grilla[i][j].ataqueKamikaze || grilla[i][j].espera > 0)
+            {
+                OrdenArchivo reg;
+                reg.x = i;
+                reg.y = j;
+                reg.espera = grilla[i][j].espera;
+                reg.soltarGranada1 = grilla[i][j].soltarGranada1;
+                reg.soltarGranada2 = grilla[i][j].soltarGranada2;
+                reg.ataqueKamikaze = grilla[i][j].ataqueKamikaze;
+                reg.aterrizaje = grilla[i][j].aterrizaje;
+                reg.despegue = grilla[i][j].despegue;
+                reg.siguientex = grilla[i][j].siguientex;
+                reg.siguientey = grilla[i][j].siguientey;
+
+                fwrite(&reg, sizeof(OrdenArchivo), 1, f);
+                registrosGuardados++;
+            }
+        }
+    }
+
+    fclose(f);
+
+    cout << "Memoria guardada exitosamente en el nuevo archivo. Total de registros: "
+         << registrosGuardados << endl;
+
+    return true;
+}
+

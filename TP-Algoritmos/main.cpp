@@ -75,7 +75,9 @@ void ejecutarMenu(Orden grilla[TAM_GRILLA][TAM_GRILLA])
 
             case 6:
                 cout << "[OPERACION 6] Guardar memoria en un archivo nuevo\n" << endl;
-
+                char rutaNuevo[384];
+                pedirRutaArchivo(rutaNuevo);
+                guardarMemoriaArchivoNuevo(rutaNuevo, grilla);
                 break;
 
             case 7:
