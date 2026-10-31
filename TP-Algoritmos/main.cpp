@@ -69,7 +69,7 @@ void ejecutarMenu(Orden grilla[TAM_GRILLA][TAM_GRILLA])
 
             case 5:
                 cout << "[OPERACION 5] Corregir un registro en memoria\n" << endl;
-
+                corregirRegistroMemoria(grilla);
                 break;
 
             case 6:
