@@ -10,7 +10,7 @@ bool generarHTML(const char rutaHTML[], Orden grilla[TAM_GRILLA][TAM_GRILLA])
     FILE *f = fopen(rutaHTML, "w");
     if (f == NULL)
     {
-        cout << "[!] Error: No se pudo crear el archivo HTML en: " << rutaHTML << endl;
+        cout << "Error: No se pudo crear el archivo HTML en: " << rutaHTML << endl;
         return false;
     }
 
@@ -122,6 +122,6 @@ bool generarHTML(const char rutaHTML[], Orden grilla[TAM_GRILLA][TAM_GRILLA])
     fprintf(f, "</body>\n</html>\n");
 
     fclose(f);
-    cout << "[OK] Archivo HTML con Zoom generado exitosamente en: " << rutaHTML << endl;
+    cout << "Archivo HTML generado exitosamente en: " << rutaHTML << endl;
     return true;
 }
