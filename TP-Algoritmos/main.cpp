@@ -36,6 +36,7 @@ void opcionesMenu()
 void ejecutarMenu(Orden grilla[TAM_GRILLA][TAM_GRILLA])
 {
     int opcion = -1;
+    int largo = 0;
 
     do
     {
@@ -81,7 +82,16 @@ void ejecutarMenu(Orden grilla[TAM_GRILLA][TAM_GRILLA])
 
             case 7:
                 cout << "[OPERACION 7] Visualizar ataque cargado en HTML\n" << endl;
+                char rutaHTML[384];
+                pedirRutaArchivo(rutaHTML);
 
+                largo = strlen(rutaHTML);
+                if (largo >= 4 && strcmp(rutaHTML + largo - 4, ".dat") == 0)
+                {
+                    strcpy(rutaHTML + largo - 4, ".html");
+                }
+
+                generarHTML(rutaHTML, grilla);
                 break;
 
             case 0:
