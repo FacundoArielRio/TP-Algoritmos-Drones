@@ -282,3 +282,90 @@ void mostrarAtaque(Orden grilla[TAM_GRILLA][TAM_GRILLA])
         }
     }
 }
+
+void corregirRegistroMemoria(Orden grilla[TAM_GRILLA][TAM_GRILLA])
+{
+    int x, y;
+    cout << "=== OPERACION 5: CORREGIR REGISTRO EN MEMORIA ===" << endl;
+    cout << "Ingrese la coordenada X a corregir (0 a 199): ";
+    cin >> x;
+    cout << "Ingrese la coordenada Y a corregir (0 a 199): ";
+    cin >> y;
+
+    if (x < 0 || x >= TAM_GRILLA || y < 0 || y >= TAM_GRILLA)
+    {
+        cout << "\n[!] Error: Las coordenadas (" << x << "; " << y << ") estan fuera del rango de la grilla." << endl;
+        return;
+    }
+
+    Orden &celda = grilla[x][y];
+
+    cout << "\n--- ESTADO ACTUAL EN LA CASILLA (" << x << "; " << y << ") ---" << endl;
+    cout << " -> Despegue: " << (celda.despegue ? "Si" : "No") << endl;
+    cout << " -> Aterrizaje: " << (celda.aterrizaje ? "Si" : "No") << endl;
+    cout << " -> Soltar Granada 1: " << (celda.soltarGranada1 ? "Si" : "No") << endl;
+    cout << " -> Soltar Granada 2: " << (celda.soltarGranada2 ? "Si" : "No") << endl;
+    cout << " -> Ataque Kamikaze: " << (celda.ataqueKamikaze ? "Si" : "No") << endl;
+    cout << " -> Tiempo de espera: " << celda.espera << " segundos" << endl;
+    cout << " -> Siguiente casilla: (" << celda.siguientex << "; " << celda.siguientey << ")" << endl;
+
+    cout << "\n--- INGRESE LOS NUEVOS DATOS PARA LA CASILLA ---" << endl;
+
+    int accion;
+    cout << "Elija la accion a realizar en (" << x << "; " << y << "):\n";
+    cout << "  0 = Ninguna (Solo moverse)\n";
+    cout << "  1 = Despegue\n";
+    cout << "  2 = Soltar Granada 1\n";
+    cout << "  3 = Soltar Granada 2\n";
+    cout << "  4 = Ataque Kamikaze\n";
+    cout << "  5 = Aterrizaje\n";
+    cout << "Opcion (0 a 5): ";
+    cin >> accion;
+
+    celda.despegue = false;
+    celda.soltarGranada1 = false;
+    celda.soltarGranada2 = false;
+    celda.ataqueKamikaze = false;
+    celda.aterrizaje = false;
+
+    switch (accion)
+    {
+        case 0:
+            break;
+        case 1:
+            celda.despegue = true;
+            break;
+        case 2:
+            celda.soltarGranada1 = true;
+            break;
+        case 3:
+            celda.soltarGranada2 = true;
+            break;
+        case 4:
+            celda.ataqueKamikaze = true;
+            break;
+        case 5:
+            celda.aterrizaje = true;
+            break;
+        default:
+            cout << "\nOpcion no valida. No se aplicaron cambios de accion." << endl;
+            break;
+    }
+
+    cout << "Segundos de espera: ";
+    cin >> celda.espera;
+
+    cout << "Siguiente posicion X (0 a 199): ";
+    cin >> celda.siguientex;
+
+    cout << "Siguiente posicion Y (0 a 199): ";
+    cin >> celda.siguientey;
+
+    if (celda.siguientex < 0 || celda.siguientex >= TAM_GRILLA ||
+        celda.siguientey < 0 || celda.siguientey >= TAM_GRILLA)
+    {
+        cout << "\nAdvertencia: La celda siguiente ingresada excede los limites de la grilla." << endl;
+    }
+
+    cout << "\nEl registro en memoria RAM (" << x << "; " << y << ") fue actualizado correctamente." << endl;
+}
