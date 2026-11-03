@@ -303,12 +303,43 @@ void corregirRegistroMemoria(Orden grilla[TAM_GRILLA][TAM_GRILLA])
 
     Orden &celda = grilla[x][y];
 
+    string sDespegue = "No";
+    if (celda.despegue)
+    {
+        sDespegue = "Si";
+    }
+
+    string sAterrizaje = "No";
+    if (celda.aterrizaje)
+    {
+        sAterrizaje = "Si";
+    }
+
+    string sGranada1 = "No";
+    if (celda.soltarGranada1)
+    {
+        sGranada1 = "Si";
+    }
+
+    string sGranada2 = "No";
+    if (celda.soltarGranada2)
+    {
+        sGranada2 = "Si";
+    }
+
+    string sKamikaze = "No";
+    if (celda.ataqueKamikaze)
+    {
+        sKamikaze = "Si";
+    }
+
+
     cout << "\n--- ESTADO ACTUAL EN LA CASILLA (" << x << "; " << y << ") ---" << endl;
-    cout << " -> Despegue: " << (celda.despegue ? "Si" : "No") << endl;
-    cout << " -> Aterrizaje: " << (celda.aterrizaje ? "Si" : "No") << endl;
-    cout << " -> Soltar Granada 1: " << (celda.soltarGranada1 ? "Si" : "No") << endl;
-    cout << " -> Soltar Granada 2: " << (celda.soltarGranada2 ? "Si" : "No") << endl;
-    cout << " -> Ataque Kamikaze: " << (celda.ataqueKamikaze ? "Si" : "No") << endl;
+    cout << " -> Despegue: " << sDespegue << endl;
+    cout << " -> Aterrizaje: " << sAterrizaje << endl;
+    cout << " -> Soltar Granada 1: " << sGranada1 << endl;
+    cout << " -> Soltar Granada 2: " << sGranada2 << endl;
+    cout << " -> Ataque Kamikaze: " << sKamikaze << endl;
     cout << " -> Tiempo de espera: " << celda.espera << " segundo/s" << endl;
     cout << " -> Siguiente casilla: (" << celda.siguientex << "; " << celda.siguientey << ")" << endl;
 
