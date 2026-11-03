@@ -94,35 +94,38 @@ bool validarRecorrido(OrdenArchivo registros[], int cantidad, int idxDespegue)
 
         if (registros[idxActual].aterrizaje || registros[idxActual].ataqueKamikaze) {
             llegoAlFinal = true;
-            break;
         }
 
-        int siguienteX = registros[idxActual].siguientex;
-        int siguienteY = registros[idxActual].siguientey;
+        if (!llegoAlFinal) {
+                int siguienteX = registros[idxActual].siguientex;
+                int siguienteY = registros[idxActual].siguientey;
 
-        int diferenciaX = abs(siguienteX - cx);
-        int diferenciaY = abs(siguienteY - cy);
+                int diferenciaX = abs(siguienteX - cx);
+                int diferenciaY = abs(siguienteY - cy);
+                if (diferenciaX > 1 || diferenciaY > 1 || (siguienteX == cx && siguienteY == cy)) {
+                        cout << "Salto no valido hacia (" << siguienteX << "; " << siguienteY << "). No son celdas aledanas." << endl;
+                        return false;
+                }
 
-        if (diferenciaX > 1 || diferenciaY > 1 || (siguienteX == cx && siguienteY == cy)) {
-            cout << "Salto no valido hacia (" << siguienteX << "; " << siguienteY << "). No son celdas aledanas." << endl;
-            return false;
+                int siguienteIdx = -1;
+
+                int j = 0;
+                while(siguienteIdx == -1 && j < cantidad) {
+                        if (registros[j].x == siguienteX && registros[j].y == siguienteY) {
+                            siguienteIdx = j;
+                        }
+                        j++;
+                }
+
+                if (siguienteIdx == -1) {
+                        cout << "Ruta incompleta: no existe orden guardada para la celda destino ("
+                        << siguienteX << "; " << siguienteY << ").\n" << endl;
+                return false;
+                }
+
+                idxActual = siguienteIdx;
+
         }
-
-        int siguienteIdx = -1;
-        for (int j = 0; j < cantidad; j++) {
-            if (registros[j].x == siguienteX && registros[j].y == siguienteY) {
-                siguienteIdx = j;
-                break;
-            }
-        }
-
-        if (siguienteIdx == -1) {
-            cout << "Ruta incompleta: no existe orden guardada para la celda destino ("
-                 << siguienteX << "; " << siguienteY << ").\n" << endl;
-            return false;
-        }
-
-        idxActual = siguienteIdx;
     }
 
     if (!llegoAlFinal) {
@@ -306,51 +309,50 @@ void corregirRegistroMemoria(Orden grilla[TAM_GRILLA][TAM_GRILLA])
     cout << " -> Soltar Granada 1: " << (celda.soltarGranada1 ? "Si" : "No") << endl;
     cout << " -> Soltar Granada 2: " << (celda.soltarGranada2 ? "Si" : "No") << endl;
     cout << " -> Ataque Kamikaze: " << (celda.ataqueKamikaze ? "Si" : "No") << endl;
-    cout << " -> Tiempo de espera: " << celda.espera << " segundos" << endl;
+    cout << " -> Tiempo de espera: " << celda.espera << " segundo/s" << endl;
     cout << " -> Siguiente casilla: (" << celda.siguientex << "; " << celda.siguientey << ")" << endl;
 
-    cout << "\n--- INGRESE LOS NUEVOS DATOS PARA LA CASILLA ---" << endl;
+    cout << "\n--- INGRESE LAS ACCIONES A AGREGAR EN LA CASILLA (Y 0 PARA TERMINAR) ---" << endl;
 
     int accion;
-    cout << "Elija la accion a realizar en (" << x << "; " << y << "):\n";
-    cout << "  0 = Ninguna (Solo moverse)\n";
-    cout << "  1 = Despegue\n";
-    cout << "  2 = Soltar Granada 1\n";
-    cout << "  3 = Soltar Granada 2\n";
-    cout << "  4 = Ataque Kamikaze\n";
-    cout << "  5 = Aterrizaje\n";
-    cout << "Opcion (0 a 5): ";
-    cin >> accion;
 
-    celda.despegue = false;
-    celda.soltarGranada1 = false;
-    celda.soltarGranada2 = false;
-    celda.ataqueKamikaze = false;
-    celda.aterrizaje = false;
+    do {
+            cout << "\nAccion a agregar en (" << x << ";" << y << "):\n" << endl;
 
-    switch (accion)
-    {
-        case 0:
-            break;
-        case 1:
-            celda.despegue = true;
-            break;
-        case 2:
-            celda.soltarGranada1 = true;
-            break;
-        case 3:
-            celda.soltarGranada2 = true;
-            break;
-        case 4:
-            celda.ataqueKamikaze = true;
-            break;
-        case 5:
-            celda.aterrizaje = true;
-            break;
-        default:
-            cout << "\nOpcion no valida. No se aplicaron cambios de accion." << endl;
-            break;
-    }
+            cout << "  0 = Ninguna (terminar actualizacion de acciones del registro)\n";
+            cout << "  1 = Despegue (valor actual = " << celda.despegue << ") \n";
+            cout << "  2 = Soltar Granada 1 (valor actual = " << celda.soltarGranada1 << ") \n";
+            cout << "  3 = Soltar Granada 2 (valor actual = " << celda.soltarGranada2 << ") \n";
+            cout << "  4 = Ataque Kamikaze (valor actual = " << celda.ataqueKamikaze << ") \n";
+            cout << "  5 = Aterrizaje (valor actual = " << celda.aterrizaje << ") \n";
+
+            cout << "\nElija una opcion de 0 a 5: ";
+            cin >> accion;
+
+            switch(accion)
+            {
+                case 0:
+                    break;
+                case 1:
+                    celda.despegue = true;
+                    break;
+                case 2:
+                    celda.soltarGranada1 = true;
+                    break;
+                case 3:
+                    celda.soltarGranada2 = true;
+                    break;
+                case 4:
+                    celda.ataqueKamikaze = true;
+                    break;
+                case 5:
+                    celda.aterrizaje = true;
+                    break;
+                default:
+                    cout << "\nError: debe de elegir una opcion del 0 al 5." << endl;
+                    break;
+            }
+    } while (accion);
 
     cout << "Segundos de espera: ";
     cin >> celda.espera;
