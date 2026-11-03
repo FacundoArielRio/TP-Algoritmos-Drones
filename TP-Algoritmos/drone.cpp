@@ -333,7 +333,6 @@ void corregirRegistroMemoria(Orden grilla[TAM_GRILLA][TAM_GRILLA])
         sKamikaze = "Si";
     }
 
-
     cout << "\n--- ESTADO ACTUAL EN LA CASILLA (" << x << "; " << y << ") ---" << endl;
     cout << " -> Despegue: " << sDespegue << endl;
     cout << " -> Aterrizaje: " << sAterrizaje << endl;
