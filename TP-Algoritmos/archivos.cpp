@@ -96,7 +96,7 @@ void crearArchivoAtaque()
                         cout << "\nError: debe de elegir una opcion del 0 al 5." << endl;
                     break;
                 }
-        } while (accion);
+        } while (accion!=0);
 
         cout << "\nSegundos de espera: ";
         cin >> reg.espera;
@@ -112,6 +112,7 @@ void crearArchivoAtaque()
         cin >> continuar;
 
     } while (continuar == 's' || continuar == 'S');
+    fclose(f);
 }
 
 void corregirRegistroArchivo()
@@ -230,11 +231,11 @@ bool guardarMemoriaArchivoNuevo(char rutaNuevo[], Orden grilla[TAM_GRILLA][TAM_G
     {
         for (int j = 0; j < TAM_GRILLA; j++)
         {
-            if (grilla[i][j].despegue||grilla[i][j].aterrizaje||
-
-                grilla[i][j].soltarGranada1 || grilla[i][j].soltarGranada2||
-
-                grilla[i][j].ataqueKamikaze || grilla[i][j].espera > 0)
+            if (grilla[i][j].despegue==true||grilla[i][j].aterrizaje==true||
+                grilla[i][j].soltarGranada1==true|| grilla[i][j].soltarGranada2==true||
+                grilla[i][j].ataqueKamikaze==true|| grilla[i][j].espera > 0 || (grilla[i][j].siguientex >= 0 && grilla[i][j].siguientex < TAM_GRILLA &&
+                 grilla[i][j].siguientey >= 0 && grilla[i][j].siguientey < TAM_GRILLA &&
+                 (grilla[i][j].siguientex != 0 || grilla[i][j].siguientey != 0 || i != 0 || j != 0)))
             {
                 OrdenArchivo reg;
                 reg.x = i;

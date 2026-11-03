@@ -18,8 +18,8 @@ void inicializarGrilla(Orden grilla[TAM_GRILLA][TAM_GRILLA])
             grilla[i][j].ataqueKamikaze = false;
             grilla[i][j].aterrizaje = false;
             grilla[i][j].despegue = false;
-            grilla[i][j].siguientex = 0;
-            grilla[i][j].siguientey = 0;
+            grilla[i][j].siguientex = -1;
+            grilla[i][j].siguientey = -1;
         }
     }
 }
@@ -44,7 +44,7 @@ bool validarInstrucciones(OrdenArchivo registros[], int cantidad, int &idxDespeg
             idxDespegue=i;
             if(registros[i].soltarGranada1==true||registros[i].soltarGranada2==true||registros[i].ataqueKamikaze==true)
             {
-                cout << "La instrucción de despegue no puede contener armas ni ataques.\n" << endl;
+                cout << "La instrucci n de despegue no puede contener armas ni ataques.\n" << endl;
                 return false;
             }
         }
