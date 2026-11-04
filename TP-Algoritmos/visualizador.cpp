@@ -7,7 +7,6 @@ using namespace std;
 
 bool generarHTML(const char rutaHTML[], Orden grilla[TAM_GRILLA][TAM_GRILLA])
 {
-    // 1. Apertura del archivo en modo texto "w"
     FILE *f = fopen(rutaHTML, "w");
     if (f == NULL)
     {
@@ -15,7 +14,6 @@ bool generarHTML(const char rutaHTML[], Orden grilla[TAM_GRILLA][TAM_GRILLA])
         return false;
     }
 
-    // 2. Escritura del encabezado del documento HTML e inyección del CSS definido en el .h
     fprintf(f, "<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n");
     fprintf(f, "  <meta charset=\"UTF-8\">\n");
     fprintf(f, "  <title>Misión del Dron</title>\n");
@@ -27,7 +25,6 @@ bool generarHTML(const char rutaHTML[], Orden grilla[TAM_GRILLA][TAM_GRILLA])
     fprintf(f, "    <div class=\"table-container\">\n");
     fprintf(f, "      <table>\n");
 
-    // 3. Recorrido de los 40.000 casilleros de la grilla en RAM (200x200)
     for (int i = 0; i < TAM_GRILLA; i++)
     {
         fprintf(f, "        <tr>\n");
@@ -54,7 +51,6 @@ bool generarHTML(const char rutaHTML[], Orden grilla[TAM_GRILLA][TAM_GRILLA])
     fprintf(f, "      </table>\n");
     fprintf(f, "    </div>\n");
 
-    // 4. Inserción de la leyenda táctica (Sidebar)
     fprintf(f, "    <div class=\"sidebar\">\n");
     fprintf(f, "      <h3>Referencias</h3>\n");
     fprintf(f, "      <div class=\"item\"><div class=\"box c-despegue\">D</div> Despegue</div>\n");
@@ -66,8 +62,7 @@ bool generarHTML(const char rutaHTML[], Orden grilla[TAM_GRILLA][TAM_GRILLA])
     fprintf(f, "  </div>\n");
     fprintf(f, "</body>\n</html>\n");
 
-    // 5. Cierre del stream de datos
     fclose(f);
-    cout << "\n[OK] Archivo HTML generado exitosamente en: " << rutaHTML << endl;
+    cout << "\nArchivo HTML generado exitosamente en: " << rutaHTML << endl;
     return true;
 }
